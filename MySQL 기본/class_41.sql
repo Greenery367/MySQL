@@ -10,7 +10,7 @@ CREATE TABLE TB_PRODUCTS(
 );
 
 -- 남성복 상품 입력
-INSERT INTO TB_PRODUCTS(PRODUtb_categoriesCT_NAME,CATEGORY_ID,PRICE,SIZE,COLOR)
+INSERT INTO TB_PRODUCTS(PRODUCT_NAME,CATEGORY_ID,PRICE,SIZE,COLOR)
 VALUES ('남성셔츠',4,49000,'L','퍼플'),
 ('남성면바지',7,55000,'M','핑크'),
 ('남성슬랙스',8,105000,'XL','샤인');
@@ -65,28 +65,14 @@ where c.category_name='슬랙스'
         where category_name='팬츠' and parent_id=2);
         
 -- 문제 3. 
-use mydb3;
+
 -- 문제 남성 셔츠 1벌 여성 면바지2벌 남성 슬랙스 4벌의 총 가격을 구하시오
-select p.product_name, P.PRICE, SUM(P.PRICE)
-from tb_products as p
-join tb_categories as c 
-on p.category_id = c.category_id
-where (c.category_name ='면바지' and c.parent_id=5) 
-or (c.category_name ='슬랙스' and c.parent_id=3) 
-or (c.category_name ='셔츠' and c.parent_id=1);
+select p.product_name
+from TB_PRODUCTS as p
+join tb_categories as c on p.category_id = c.category_id
+where c.category_name = '면바지' and c.parent_id = 
+		(select c.parent_id from tb_categories 
+		where category_name = '면바지' and category_id=7);
 
--- 문제 3. 특정 색상의 상품이 있는 모든 카테고리 조회
-select *
-from tb_products as p
-where color='퍼플';
-
--- 문제 4. 가장 비싼 상품을 가진 카테고리 찾기(서브쿼리 사용안해도 됨)
-select *
-from tb_products as p
-order by p.price desc
-LIMIT 0,3;
-
-select*from TB_CATEGORIES;
+select*from tb_categories;
 select*from tb_products;
-
--- 문제
